@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="../dist/storage.global.js"></script>
+
+    <script>
+
+      console.log('BaseStorage',BaseStorage);
+
+
+      const { BaseStorage: ClassBaseStorage, StorageBus,StorageSerializers } = BaseStorage;
+
+      // console.log('ClassBaseStorage',ClassBaseStorage)
+      const storage = new ClassBaseStorage({
+        expires: 6000,
+        prefix: "local_",
+      });
+
+
+      window.addEventListener('setItemEvent',(e)=>{
+        console.log('setItemEvent',e);
+
+      })
+
+      const storageMap = new Map([[1, { s: 1,depp:new Map([[1, { s: 2, }]]) }]]);
+     
+      storage.set("string",'string');
+
+      storage.set("number", 1);
+
+      storage.set('map',storageMap)
+      storage.set('array',[2,3,4])
+
+      storage.set('set',new Set([2,23]))
+
+      storage.set('null',null)
+
+      storage.set('date',new Date())
+
+      storage.set('object',{a:1})
+      
+
+
+      console.log('get map',storage.get('map',StorageSerializers.map) );
+
+      console.log('get map',storage.get('object',StorageSerializers.object) );
+      // console.log('get date',storage.get('date') );
+
+    </script>
+  </body>
+</html>

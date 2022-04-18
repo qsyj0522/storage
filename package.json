@@ -1,0 +1,37 @@
+{
+  "name": "@qsyjlib/storage",
+  "version": "1.0.2",
+
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "build": "node scripts/build.js"
+  },
+  "types": "./dist/index.d.ts",
+  "module": "dist/storage.esm-bundler.js",
+  "buildOptions": {
+    "name": "BaseStorage",
+    "formats": [
+      "esm-bundler",
+      "global"
+    ]
+  },
+  "keywords": [
+    "Local Storage"
+  ],
+  "author": "qsyj",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.2.1",
+    "execa": "^4.0.2",
+    "rollup": "^2.70.2",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-typescript2": "^0.31.2",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.3"
+  },
+  "directories": {
+    "example": "example"
+  },
+  "description": ""
+}

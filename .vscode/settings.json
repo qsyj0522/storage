@@ -1,0 +1,6 @@
+{
+    "fileheader.configObj": {
+        "autoAdd": false, // 默认开启自动添加头部注释，当文件没有设置头部注释时保存会自动添加
+        "autoAlready": false, // 默认开启
+    }
+}

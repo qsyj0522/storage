@@ -1,0 +1,14 @@
+# 忽略目录
+examples/
+example/
+packages/
+scripts/
+src/
+.vscode/
+node_modules
+
+# 忽略指定文件
+rollup.config.js
+pnpm-lock.yaml
+tsconfig.json
+*.map
