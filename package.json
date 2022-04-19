@@ -1,6 +1,6 @@
 {
   "name": "@qsyjlib/storage",
-  "version": "1.0.3",
+  "version": "1.0.4",
 
   "scripts": {
     "dev": "node scripts/dev.js",

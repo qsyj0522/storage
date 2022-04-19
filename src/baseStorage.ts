@@ -43,7 +43,7 @@ class BaseStorage {
   localStorage: BaseLocalStorageType;
   prefix: string;
   expires: number;
-  serializers:SerializerRecorad
+  serializers:SerializerRecorad | {}
   isSerializer:boolean
 
   /**
@@ -90,13 +90,13 @@ class BaseStorage {
 
     if(this.isSerializer) {
 
-      const handler =  readHandler || serializerHandler<T>(data.value)
+      const handler =  readHandler || serializerHandler<T>(data.value,this.serializers)
 
       readValue = handler.read(data.value)
 
     }else {
 
-      readValue = JSON.parse(data.value)
+      readValue = data.value
 
     }
 
@@ -118,7 +118,7 @@ class BaseStorage {
 
 
     }else {
-      _value = JSON.stringify(value)
+      _value = value
     }
 
   
@@ -132,7 +132,7 @@ class BaseStorage {
    * 获取所有 缓存key
    * @returns
    */
-  keys(): number[] | never {
+  keys(): number[] | never[] {
     const localKeys = this.localStorage.length;
 
     if (localKeys === 0) return [];
@@ -161,7 +161,7 @@ class BaseStorage {
   remove(key: string): void {
     this.localStorage.removeItem(this._jointKey(key));
   }
-  
+
   batchRemove() {}
 
   /**
@@ -202,7 +202,7 @@ class BaseStorage {
   }
 
   /**
-   * token是否过期
+   * 是否过期
    * @param {Number} timeStamp
    * @returns
    */

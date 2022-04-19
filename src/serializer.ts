@@ -15,7 +15,7 @@ export type SerializerRecoradKey =
   | "set"
   | "date";
 
-export type SerializerRecorad = Record<SerializerRecoradKey, Serializer<any>> | {};
+export type SerializerRecorad = Record<SerializerRecoradKey, Serializer<any>>;
 
 export const StorageSerializers: SerializerRecorad = {
   boolean: {
@@ -54,7 +54,7 @@ export const StorageSerializers: SerializerRecorad = {
 };
 
 
-export function serializerHandler<T>(value, serializers?:SerializerRecorad): Serializer<T> {
+export function serializerHandler<T>(value, serializers?:SerializerRecorad | {}): Serializer<T> {
 
 
   const type = toRawType(value);
