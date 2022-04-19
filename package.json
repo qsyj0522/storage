@@ -16,8 +16,14 @@
     ]
   },
   "keywords": [
-    "Local Storage"
+    "Local Storage",
+    "Storage"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qsyj0522/storage"
+  },
+  "homepage": "https://github.com/qsyj0522/storage",
   "author": "qsyj",
   "license": "MIT",
   "devDependencies": {

@@ -77,8 +77,6 @@ class BaseStorage {
     const data: DataFormatterType = JSON.parse(value);
 
     const handler =  readHandler || serializerHandler<T>(data.value)
-
-    console.log('handler',handler);
     
 
     if (this._isExpires(data.timestamp)) {
@@ -86,9 +84,7 @@ class BaseStorage {
       return null;
     }
 
-    
-
-
+  
     return  handler.read(data.value)  || null;
   }
   /**
