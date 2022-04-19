@@ -33,7 +33,7 @@ function createConfig(format,output){
 
     output.name = options.name
 
-    output.sourcemap = process.env.SOURCE_MAP
+    output.sourcemap = process.env.SOURCE_MAP === 'true' ? true : false
 
     return {
         input:'src/index.ts',
