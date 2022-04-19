@@ -1,16 +1,23 @@
-
-import {toRawType} from './utils'
+import { toRawType } from "./utils";
 
 export interface Serializer<T> {
   read?(raw: string): T;
   write(value: T): string;
 }
 
+export type SerializerRecoradKey =
+  | "boolean"
+  | "object"
+  | "number"
+  | "any"
+  | "string"
+  | "map"
+  | "set"
+  | "date";
 
-export const StorageSerializers: Record<
-  "boolean" | "object" | "number" | "any" | "string" | "map" | "set" | "date",
-  Serializer<any>
-> = {
+export type SerializerRecorad = Record<SerializerRecoradKey, Serializer<any>> | {};
+
+export const StorageSerializers: SerializerRecorad = {
   boolean: {
     read: (v: any) => v === "true",
     write: (v: any) => String(v),
@@ -26,7 +33,6 @@ export const StorageSerializers: Record<
   any: {
     read: (v: any) => v,
     write: (v: any) => String(v),
-    
   },
   string: {
     read: (v: any) => v,
@@ -48,17 +54,13 @@ export const StorageSerializers: Record<
 };
 
 
+export function serializerHandler<T>(value, serializers?:SerializerRecorad): Serializer<T> {
 
 
-export function serializerHandler<T>(value):Serializer<T>{
+  const type = toRawType(value);
 
-    // console.log('value type',toRawType(value));
 
-    const type = toRawType(value)
+  const handler =  (serializers && serializers[type]) || StorageSerializers[type] || StorageSerializers["any"];
 
-    const handler = StorageSerializers[type] || StorageSerializers['any']
-    
-
-    return handler
-
+  return handler;
 }

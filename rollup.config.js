@@ -11,16 +11,15 @@ const _resolve = (p) => path.resolve(__dirname, p);
 
 const pkg = require(_resolve("package.json"));
 
-
-// // 对打包类型做映射
+const distName = pkg.name.split('/')[1]
 const outputConfig = {
 
     'esm-bundler':{
-        file:_resolve(`dist/${pkg.name}.esm-bundler.js`),
+        file:_resolve(`dist/${distName}.esm-bundler.js`),
         format:'es'
     },
     'global':{
-        file:_resolve(`dist/${pkg.name}.global.js`),
+        file:_resolve(`dist/${distName}.global.js`),
         format:'iife'
 
     },

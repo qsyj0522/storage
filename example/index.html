@@ -44,12 +44,15 @@
       storage.set('date',new Date())
 
       storage.set('object',{a:1})
+
+      storage.set('parsefloat',1.232313)
       
-
-
       console.log('get map',storage.get('map',StorageSerializers.map) );
 
-      console.log('get map',storage.get('object',StorageSerializers.object) );
+      console.log('get object',storage.get('object',StorageSerializers.object) );
+
+      console.log('get number',typeof storage.get('number',StorageSerializers.number) );
+      console.log('get parsefloat', typeof storage.get('parsefloat',StorageSerializers.number) );
       // console.log('get date',storage.get('date') );
 
     </script>
