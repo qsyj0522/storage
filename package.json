@@ -1,5 +1,5 @@
 {
-  "name": "@qsyjlib/storage",
+  "name": "storage",
   "version": "1.0.2",
 
   "scripts": {
