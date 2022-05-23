@@ -107,7 +107,7 @@ interface Serializer<T> {
 
 #### remove 移除指定缓存
 
-```typescript
+``` typescript
 remove(key: string): void;
 ```
 
@@ -115,12 +115,16 @@ remove(key: string): void;
 
 #### removeAll 移除全部缓存
 
-效果同 原 storage.clear() ，不会按前缀删除
+清除结果为 keys 取值
 
 ```
 removeAll(): void;
 ```
 
+#### batchRemove 批量移除
+``` typescript
+batchRemove(keys:string[])
+```
 
 
 #### keys
