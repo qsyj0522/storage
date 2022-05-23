@@ -1,15 +1,14 @@
 import type { BaseLocalStorageType } from "./types";
 import { isNumber } from "./utils";
-import { serializerHandler } from './serializer'
-import type { Serializer , SerializerRecorad } from './serializer'
-
+import { serializerHandler } from "./serializer";
+import type { Serializer, SerializerRecorad } from "./serializer";
 
 interface OptionsType {
   expires?: number;
   prefix?: string;
   storage?: BaseLocalStorageType;
-  serializers?: SerializerRecorad,
-  isSerializer?: boolean
+  serializers?: SerializerRecorad;
+  isSerializer?: boolean;
 }
 
 type TimeStampType = number | undefined;
@@ -32,19 +31,14 @@ export {
   SetOptionsType,
 };
 
-export {
-  serializerHandler
-}
-
-
+export { serializerHandler };
 
 class BaseStorage {
-
   localStorage: BaseLocalStorageType;
   prefix: string;
   expires: number;
-  serializers:SerializerRecorad | {}
-  isSerializer:boolean
+  serializers: SerializerRecorad | {};
+  isSerializer: boolean;
 
   /**
    * @param { OptionsType }  options
@@ -54,16 +48,15 @@ class BaseStorage {
       prefix,
       expires,
       storage = window.localStorage,
-      isSerializer = true,
-      serializers = {}
+      isSerializer = false,
+      serializers = {},
     } = options;
 
     this.localStorage = storage;
     this.prefix = prefix ? String(prefix) : undefined;
     this.expires = isNumber(expires) ? expires : undefined;
-    this.serializers = serializers
-    this.isSerializer = isSerializer
-
+    this.serializers = serializers;
+    this.isSerializer = isSerializer;
   }
 
   /**
@@ -72,9 +65,7 @@ class BaseStorage {
    * @param { Serializer<T> } 读取器
    * @returns { T | null } json 对象
    */
-  get<T = any>(key: string, readHandler?:Serializer<T>): T | null {
-
-  
+  get<T>(key: string, readHandler?: Serializer<T>): T | null {
     const value = this.localStorage.getItem(this._jointKey(key));
 
     if (!value) return null;
@@ -86,21 +77,18 @@ class BaseStorage {
       return null;
     }
 
-    let readValue = null
+    let readValue = null;
 
-    if(this.isSerializer) {
+    if (this.isSerializer) {
+      const handler =
+        readHandler || serializerHandler<T>(data.value, this.serializers);
 
-      const handler =  readHandler || serializerHandler<T>(data.value,this.serializers)
-
-      readValue = handler.read(data.value)
-
-    }else {
-
-      readValue = data.value
-
+      readValue = handler.read(data.value);
+    } else {
+      readValue = data.value;
     }
 
-    return  readValue  || null;
+    return readValue || null;
   }
   /**
    *
@@ -108,20 +96,15 @@ class BaseStorage {
    * @param {*} value 缓存数据
    */
   set(key: string, value: any, options?: SetOptionsType): void {
+    let _value = null;
 
-    let _value = null
-
-    if(this.isSerializer) {
-
-      const handler = serializerHandler(value,this.serializers)
-      _value = handler.write(value)
-
-
-    }else {
-      _value = value
+    if (this.isSerializer) {
+      const handler = serializerHandler(value, this.serializers);
+      _value = handler.write(value);
+    } else {
+      _value = value;
     }
 
-  
     this.localStorage.setItem(
       this._jointKey(key),
       this._dataFormatter(_value, options)
@@ -132,12 +115,12 @@ class BaseStorage {
    * 获取所有 缓存key
    * @returns
    */
-  keys(): number[] | never[] {
+  keys(): string[] | never[] {
     const localKeys = this.localStorage.length;
 
     if (localKeys === 0) return [];
 
-    let keysArr = [];
+    let keysArr: string[] = [];
 
     for (let i = 0; i < localKeys; i++) {
       const keyString = this.localStorage.key(i);
@@ -162,13 +145,26 @@ class BaseStorage {
     this.localStorage.removeItem(this._jointKey(key));
   }
 
-  batchRemove() {}
+
+  /**
+   * 批量移除
+   * @param keys 
+   */
+  batchRemove(keys:string[] = []):void {
+    for (let i = 0; i < keys.length; i++) {
+      this.remove(keys[i]);
+    }
+  }
+
 
   /**
    * 清除全部
+   * @param exclude 
    */
-  removeAll(): void {
-    this.localStorage.clear();
+  removeAll(exclude:string[] = []): void {
+    const keys = this.keys().filter((key) => !exclude.includes(key));
+
+    this.batchRemove(keys)
   }
 
   _jointKey(key: string): string {
@@ -215,11 +211,5 @@ class BaseStorage {
     return false;
   }
 }
-
-
-
-
-
-
 
 export default BaseStorage;

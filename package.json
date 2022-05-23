@@ -1,7 +1,6 @@
 {
   "name": "@qsyjlib/storage",
-  "version": "1.0.4",
-
+  "version": "1.0.6",
   "scripts": {
     "dev": "node scripts/dev.js",
     "build": "node scripts/build.js"
@@ -21,9 +20,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qsyj0522/storage"
+    "url": "git+https://github.com/qsyj-lab/storage"
   },
-  "homepage": "https://github.com/qsyj0522/storage",
+  "homepage": "https://github.com/qsyj-lab/storage",
   "author": "qsyj",
   "license": "MIT",
   "devDependencies": {

@@ -22,57 +22,26 @@
       const storage = new ClassBaseStorage({
         storage: window.localStorage,
         expires: 86400,
-        prefix: "local_",
-        isSerializer: true,
-        serializers: {
-          object: {
-            read: (v) => v,
-            write: (v) => v,
-          },
-        },
-      });
-
-      window.addEventListener("setItemEvent", (e) => {
-        console.log("setItemEvent", e);
+        prefix: "local_"
       });
 
       const storageMap = new Map([
         [1, { s: 1, depp: new Map([[1, { s: 2 }]]) }],
       ]);
+      const values = {
+        tet:1,
+        test:storageMap,
+        obj: {
+        
+        }
+      }
 
-      storage.set("string", "string");
 
-      storage.set("number", 1);
 
-      storage.set("map", storageMap);
-      storage.set("array", [2, 3, 4]);
+      localStorage.setItem('test',11)
 
-      storage.set("set", new Set([2, 23]));
-
-      storage.set("null", null);
-
-      storage.set("date", new Date());
-
-      storage.set("object", { a: 1 });
-
-      storage.set("parsefloat", 1.232313);
-
-      console.log("get map", storage.get("map", StorageSerializers.map));
-
-      console.log(
-        "get number",
-        storage.get("object")
-      );
-
-      // console.log(
-      //   "get number",
-      //   typeof storage.get("number", StorageSerializers.number)
-      // );
-      // console.log(
-      //   "get parsefloat",
-      //   typeof storage.get("parsefloat", StorageSerializers.number)
-      // );
-      // console.log('get date',storage.get('date') );
+      
+      storage.set("testValues", values);
     </script>
   </body>
 </html>
